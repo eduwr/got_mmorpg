@@ -1,5 +1,5 @@
 const { check, validationResult} = require('express-validator');
-const usuariosDAO = require('../models/usuariosDAO')();
+// const usuariosDAO = require('../models/usuariosDAO')();
 // const dbConnection = require('../../config/dbConnection')
 
 module.exports.cadastro = (req, res) => {
