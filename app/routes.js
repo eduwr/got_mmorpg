@@ -11,6 +11,8 @@ routes.get('/', indexController.index);
 
 routes.get('/cadastro', cadastroController.cadastro);
 
+routes.post('/cadastrar', cadastroController.validacaoForm('cadastrarUsuario'), cadastroController.cadastrar);
+
 routes.get('/jogo', jogoController.jogo)
 
 module.exports = routes;

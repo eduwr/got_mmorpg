@@ -2,6 +2,9 @@
 
 const app = require('./config/server');
 
+const mongoose = require('mongoose');
+
+
 // parametrizar a porta de escuta
 
 const server = require('http').Server(app);
@@ -13,7 +16,12 @@ const server = require('http').Server(app);
 //     return next();
 // });
 
-// criar a conexão por websocket
+// Conectar ao mongoDB Atlas
+
+mongoose.connect('mongodb+srv://admin:admin@cluster0-jwyto.mongodb.net/test?retryWrites=true&w=majority', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
 
 app.use(require('./app/routes'));
 
