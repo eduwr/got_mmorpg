@@ -6,6 +6,10 @@ const express = require('express');
 
 const bodyParser = require('body-parser');
 
+// importar o express-session
+
+const expressSession = require('express-session');
+
 // iniciar o objeto do express
 
 const app = express();
@@ -20,6 +24,13 @@ app.use(express.static('./app/public'));
 
 // configurar o middleware body-parser
 app.use(bodyParser.urlencoded({extended: true}));
+
+// configura o middleware express-session
+app.use(expressSession({
+    secret: 'klasdffbuiocvjklsdf',
+    resave: false,
+    saveUninitialized: false,
+}));
 
 
 // exportar o objeto app;

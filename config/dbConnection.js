@@ -1,21 +1,18 @@
 const mongoose = require('mongoose');
-const db = mongoose.connection;
+// const db = mongoose.connection;
 
-var connectMongo = () => {
-  console.log('conectando no Mongo!')
-  return mongoose.connect('mongodb+srv://admin:admin@cluster0-jwyto.mongodb.net/test?retryWrites=true&w=majority', {
+module.exports.connectMongo = () => {
+  return mongoose.createConnection('mongodb+srv://admin:admin@cluster0-jwyto.mongodb.net/test?retryWrites=true&w=majority', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
   });
 };
 
-module.exports = () => {
-    return connectMongo;
+module.exports.disconnectMongo = () => {
+  return mongoose.disconnect()
 };
 
 // db.on('error', console.error);
 // db.on('open', () => {
 //     console.log('Conectado ao Mongo')
 // });
-
-

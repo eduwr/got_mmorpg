@@ -1,14 +1,14 @@
-const { check, validationResult} = require('express-validator');
-// const usuariosDAO = require('../models/usuariosDAO')();
-// const dbConnection = require('../../config/dbConnection')
+const { validationResult } = require('express-validator');
+
+const Usuarios = require('../models/Usuarios');
+const dbConnection = require('../../config/dbConnection')
 
 module.exports.cadastro = (req, res) => {
     res.render("cadastro", {validacao: {}, dadosForm: {}})
 }
 
-module.exports.cadastrar = (req, res) => {
+module.exports.cadastrar = async (req, res) => {
     var dadosForm = req.body;
-
     var erros = validationResult(req)
     
 
@@ -22,21 +22,23 @@ module.exports.cadastrar = (req, res) => {
     // usuariosDAO = new usuariosDAO();
     // usuariosDAO.inserirUsuario(dadosForm); 
 
-    res.send('Podemos Cadastrar')
+    dbConnection.connectMongo();
+    console.log('Conectou no Mongo!')
+
+    const { nome, usuario, senha, casa } = dadosForm;
+    await Usuarios.create({
+        nome,
+        usuario,
+        senha,
+        casa,
+    });
+
+    dbConnection.disconnectMongo();
+    console.log('Desconectou do Mongo!')
+    res.send('Usuário cadastrado!')
+
+    return
 }
 
 
-module.exports.validacaoForm = (method) => {
-    switch(method){
-        case 'cadastrarUsuario' : {
-            return [
-                check('nome', 'Nome é obrigatório').not().isEmpty(),
-                check('usuario', 'Nome de usuário é obrigatório').not().isEmpty(),
-                check('usuario', 'Nome de usuário deve conter mais de 3 caracteres').isLength({min: 3, max: 15}),
-                check('senha', 'Senha é obrigatória').not().isEmpty(),
-                check('casa', 'Selecionar a casa é obrigatório').not().isEmpty(),
-            ]
-        }
-    }
-}
 
