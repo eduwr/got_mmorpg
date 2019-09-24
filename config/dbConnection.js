@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 // const db = mongoose.connection;
 
 module.exports.connectMongo = () => {
-  return mongoose.createConnection('mongodb+srv://admin:admin@cluster0-jwyto.mongodb.net/test?retryWrites=true&w=majority', {
+  return mongoose.connect('mongodb+srv://admin:admin@cluster0-jwyto.mongodb.net/test?retryWrites=true&w=majority', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
   });

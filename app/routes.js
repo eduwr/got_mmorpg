@@ -18,4 +18,11 @@ routes.get('/jogo', jogoController.jogo);
 
 routes.post('/autenticar', validacao('autenticarUsuario'), indexController.autenticar);
 
+routes.get('/sair', jogoController.sair);
+
+routes.get('/suditos', jogoController.suditos);
+
+routes.get('/pergaminhos', jogoController.pergaminhos);
+
+
 module.exports = routes;
