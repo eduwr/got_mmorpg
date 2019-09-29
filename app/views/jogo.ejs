@@ -23,6 +23,7 @@
 				});
 
 				$('#btn_suditos').click( function(){
+					$('#msg').hide();
 					$.ajax({
 						url: '/suditos',
 						method: "get",
@@ -33,16 +34,36 @@
 				});
 				
 				$('#btn_pergaminho').click( function(){
+					$('#msg').hide();
 					$.ajax({
 						url: '/pergaminhos',
 						method: "get",
 						success: function(data){
 							$('#acoes').html(data);
+
+							clearTimeout(timerId);
+							cronometro()
 						},
 					});
 				});
-
 			});	
+		
+		var timerId = null;
+
+		function cronometro(){
+			$('.tempo_restante').each(function(){
+				var segundos = $(this).html();
+				var segundos_atuais = parseInt(segundos) - 1;
+
+				if(segundos_atuais < 0){
+					window.location.href= "/jogo?msg=C"
+				}else{
+					$(this).html(segundos_atuais);
+				}
+			});
+
+			timerId = setTimeout('cronometro()', 1000);
+		}
 		</script>
 
 	</head>
@@ -58,31 +79,55 @@
 		</nav>
 
 	    <div class="container">
+
+			<% if(msg == 'A'){ %>
+				<div class="alert alert-danger" id="msg">
+					<strong>Operação Inválida! Verifique se todos os campos foram informados.</strong>
+				</div>
+			<%}%>
+
+			<% if(msg == 'B'){ %>
+				<div class="alert alert-info" id="msg">
+					<strong>Ação executada com sucesso!</strong>
+				</div>
+			<%}%>
+
+			<% if(msg == 'C'){ %>
+				<div class="alert alert-info" id="msg">
+					<strong>Sua graça, a atividade ordenada foi finalizada!</strong>
+				</div>
+			<%}%>
+
+			<% if(msg == 'D'){ %>
+				<div class="alert alert-info" id="msg">
+					<strong>Sua graça, a ordem foi revogada com sucesso!</strong>
+				</div>
+			<%}%>
 	    	
 			<div class="row">
 	    		<div class="col-sm-3 casa">
-					<img src="images/casa_<%=imgCasa%>.jpg" />
+					<img src="images/casa_<%=imgCasa%>.jpg" class="img-casa"/>
 				</div>
 
 	    		<div class="col-sm-9">
 					<div class="row barra-superior">
 						<div class="col-sm-2"> 
-							<img src="images/habilidades/temor.jpg" title="Temor" alt="Temor" />
+							<img src="images/habilidades/temor.jpg" class="img" title="Temor" alt="Temor" />
 							<span><%=atributo.temor%></span>
 						</div>
 						
 						<div class="col-sm-2"> 
-							<img src="images/habilidades/sabedoria.jpg" title="Sabedoria" alt="Sabedoria"/>
+							<img src="images/habilidades/sabedoria.jpg" class="img" title="Sabedoria" alt="Sabedoria"/>
 							<span><%=atributo.sabedoria%></span>
 						</div>
 						
 						<div class="col-sm-2"> 
-							<img src="images/habilidades/comercio.jpg" title="Comércio" alt="Comércio"/>
+							<img src="images/habilidades/comercio.jpg" class="img" title="Comércio" alt="Comércio"/>
 							<span><%=atributo.comercio%></span>
 						</div>
 						
 						<div class="col-sm-2"> 
-							<img src="images/habilidades/magia.jpg" title="Magia" alt="Magia"/>
+							<img src="images/habilidades/magia.jpg" class="img" title="Magia" alt="Magia"/>
 							<span><%=atributo.magia%></span>
 						</div>
 					</div>
@@ -103,18 +148,18 @@
 			
 				<div class="row">
 					<div class="col-sm-1">
-						<img src="images/outros/suditos.jpg" title="Aldeões" alt="Aldeões" id="btn_suditos"/>
+						<img src="images/outros/suditos.jpg" class="btn-img" title="Aldeões" alt="Aldeões" id="btn_suditos"/>
 						<span><%=atributo.suditos%></span>
 					</div>
 					
 					<div class="col-sm-1">
-						<img src="images/outros/pergaminho.jpg" title="Pergaminhos" alt="Pergaminhos" id="btn_pergaminho"/>
+						<img src="images/outros/pergaminho.jpg" class="btn-img" title="Pergaminhos" alt="Pergaminhos" id="btn_pergaminho"/>
 					</div>
 					
 					<div class="col-sm-8"></div>
 					
 					<div class="col-sm-2">
-						<img src="images/outros/moeda.jpg" title="Moeda" alt="Moeda"/>
+						<img src="images/outros/moeda.jpg" class="img" title="Moeda" alt="Moeda"/>
 						<span><%=atributo.moeda%></span>
 					</div>
 					

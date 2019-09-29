@@ -37,7 +37,7 @@ const JogoSchema = new Schema({
         default: Math.floor(Math.random()*1000),
     }    
 }, {
-    timestamps: true,
+    timestamps: false,
 })
    
 

@@ -3,7 +3,7 @@ const { validationResult } = require('express-validator');
 const Usuarios = require('../models/Usuarios');
 const Atributos = require('../models/Atributos');
 
-const dbConnection = require('../../config/dbConnection')
+// const dbConnection = require('../../config/dbConnection')
 
 module.exports.cadastro = (req, res) => {
     res.render("cadastro", {validacao: {}, dadosForm: {}})
@@ -20,9 +20,8 @@ module.exports.cadastrar = async (req, res) => {
         return
     };
 
-    dbConnection.connectMongo();
-    console.log('Conectou no Mongo!')
-
+    // dbConnection.connectMongo();
+    
     const { nome, usuario, senha, casa } = dadosForm;
 
     const userExists = await Usuarios.findOne({ usuario: usuario });
@@ -42,8 +41,7 @@ module.exports.cadastrar = async (req, res) => {
         usuario,
     })
 
-    dbConnection.disconnectMongo();
-    console.log('Desconectou do Mongo!')
+    // dbConnection.disconnectMongo();
     res.send('Usuário cadastrado!')
 
     return;
